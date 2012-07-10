@@ -4,7 +4,7 @@ Plugin Name: Branch
 Plugin URI: http://branch.com
 Description: Embed Branch conversations in your WordPress site.
 Author: Daniel Bachhuber
-Version: 0.1
+Version: 0.1.1
 Author URI: http://danielbachhuber.com
 */
 
@@ -17,6 +17,7 @@ class Branch
 	function __construct() {
 
 		add_action( 'init', array( $this, 'action_init' ) );
+		add_filter( 'oembed_result', array( $this, 'filter_oembed_result' ), 10, 3 );
 	}
 
 	/**
@@ -41,6 +42,20 @@ class Branch
 
 		// WP_Embed will take care of validation and everything else
 		return $wp_embed->shortcode( $atts, $url );
+	}
+
+	/**
+	 * Filter the oembed result to remove 'data-max-height="700"' from the
+	 * rich HTML response as this sets an unnecessary height restriction on the embed.
+	 */
+	function filter_oembed_result( $html, $url, $args ) {
+
+		// Only filter if it's a request to Branch's oEmbed endpoint
+		if ( false === stripos( $url, 'branch.com' ) )
+			return $html;
+
+		$html = preg_filter( "/[\s]?data-max-height=(['\"])[\d]+(['\"])/", '', $html );
+		return $html;
 	}
 
 }

@@ -3,7 +3,7 @@ Contributors: danielbachhuber
 Tags: branch, commenting, conversations, community
 Requires at least: 3.3
 Tested up to: 3.4
-Stable tag: 0.1
+Stable tag: 0.1.1
 
 Embed Branch conversations in your WordPress site.
 
@@ -18,6 +18,9 @@ For the former, you'll add something like this to your post:
 If you have oEmbed enabled for your site, you can add the Branch URL to a new line and the embed will generate automatically.	
 
 == Changelog ==
+
+= 0.1.1 (Jul. 9, 2012) =
+* Filter data-max-height from the response to remove unnecessary hight restriction on the embed
 
 = 0.1 (Jun. 16, 2012) =
 * Initial release
